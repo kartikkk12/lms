@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  display_name: MyString
+  overview_message: MyString
+  completion_message: MyString
+  journey_status: MyString
+  j_last_updated: 2023-02-16 11:40:20
+
+two:
+  name: MyString
+  display_name: MyString
+  overview_message: MyString
+  completion_message: MyString
+  journey_status: MyString
+  j_last_updated: 2023-02-16 11:40:20
