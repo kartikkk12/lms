@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :password_digest
       t.string :user_access
       t.string :user_status
+      t.references :organisation, null: false, foreign_key: true
 
       t.timestamps
     end
