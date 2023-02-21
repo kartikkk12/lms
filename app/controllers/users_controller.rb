@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
+      cookies[:role] = @user.user_access
       render json: @user, status: :created, logged_in: true
     else
       render json: @user.errors, status: 500

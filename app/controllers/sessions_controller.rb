@@ -3,17 +3,18 @@ class SessionsController < ApplicationController
     
     #login func
     def create
-    @user = User.find_by(email: params['email'])
-               .try(:authenticate, params['password'])
-    if @user
+    @user = User.find_by(user_name: params_user[:user_name])
+               
+    if @user && @user.authenticate(params_user[:password])
       session[:user_id] = @user.id
+      cookies[:role] = @user.user_access
       render json: {
         status: :created,
         logged_in: true,
-        user:
+        curr_user:@user
       }
     else
-      render json: { status: 401 }
+      render json: { error: 'Invalid email or password' }, status: :unprocessable_entity 
     end
     end
 
@@ -21,7 +22,7 @@ class SessionsController < ApplicationController
         if @current_user
             render json: {
                 logged_in: true,
-                user: @current_user
+                curr_user: @current_user
             }
         else
             render json:{
@@ -33,5 +34,11 @@ class SessionsController < ApplicationController
     def logout
         reset_session
         render json: { status:200, logged_out: true}
+    end
+    private
+
+    def params_user
+      params.require(:user).permit(:first_name, :last_name, :user_name, :password, :password_confirmation, :email,
+                                   :user_access, :user_status, :organisation_id)
     end
 end

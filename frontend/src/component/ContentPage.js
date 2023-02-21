@@ -1,10 +1,11 @@
 import React from 'react'
-
+import Navbar from './navbar'
+import MenuBar from './MenuBar'
 function ContentPage() {
   return (
     <div>
-      <h1> content</h1>
-      <div>assssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div>
+      <Navbar/>
+      <MenuBar/>
     </div>
   )
 }
