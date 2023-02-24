@@ -130,6 +130,7 @@ function Loginform() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     setFormErrors(validate(formValues));
     
     axios.post('http://localhost:3000/login', {user: { 
@@ -139,13 +140,13 @@ function Loginform() {
   }, {withCredentials: true}).then((response) => {
       setUser(response.data.user_name)
       console.log(currUser)
-      navigate('/ContentPage')
+      navigate('/builder')
       
       
   }).catch( (error)=> {
     if (Object.keys(formErrors).length === 0) {
       console.log(formValues);
-      alert("No user found")
+      // alert("No user found")
     }
      
      console.log("Invalid email or password")
