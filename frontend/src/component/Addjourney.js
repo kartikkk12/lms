@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 import axios from "axios";
 import ReactTable from "react-table";  
 import useCollapse from 'react-collapsed';
- 
+import Navbar from "./navbar";
  
 function Addjourney()
 {
@@ -109,10 +109,14 @@ function Addjourney()
     };
  
     return(
+      <>
+      {/* <Navbar/> */}
+      
+      
        <div className="jbox">
        <div className="jform">  
  
-        <h4><Link to="/journeys">Journeys</Link>{'>'}{'>'}New Journey</h4>
+        <h4><Link to="/builder">Journeys</Link>{'>'}{'>'}New Journey</h4>
  
         <div className="insideform">
             <form onSubmit={submitHandler}>
@@ -145,12 +149,12 @@ function Addjourney()
             <p>Characters remaining: {remainingChars4}</p>
             </div>
             <div className="collapsible">
-    <div className="headerx" {...getToggleProps()}>
-        {isExpanded ? 'Collapse' : 'Expand'}
-    </div>
-    <div {...getCollapseProps()}>
-        <div className="content">
-        <div>
+          <div className="headerx" {...getToggleProps()}>
+              {isExpanded ? 'Collapse' : 'Expand'}
+          </div>
+          <div {...getCollapseProps()}>
+              <div className="content">
+              <div>
             <form>
             <h4>Untitled Stages</h4>
             <div className="journeyform">
@@ -176,9 +180,9 @@ function Addjourney()
             </form>
             </div>
  
-        </div>
-    </div>
-</div>
+              </div>
+          </div>
+          </div>
         
         
             </div>
@@ -192,7 +196,7 @@ function Addjourney()
             </ul>
         </div>
         </div>
- 
+        
         <div className="status">
         <h4>Publish</h4>
         <hr />
@@ -215,6 +219,7 @@ function Addjourney()
         </div> 
         {/* <Footer /> */}
         </div>
+        </>
     );
 }
 export default Addjourney;

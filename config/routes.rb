@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create'
   post 'journey/create', to: 'journeys#create'
   post 'activity/create', to: 'activities#create'
+  get 'journey/showall', to: 'journeys#showall'
+  get 'user/show', to: 'users#show'
   root to: 'users#home'
 end
  

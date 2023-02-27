@@ -7,13 +7,19 @@ class UsersController < ApplicationController
     @user = User.new(params_user)
 
     if @user.save
-      session[:user_id] = @user.id
-      cookies[:role] = @user.user_access
+      # session[:user_id] = @user.id
+      # cookies[:role] = @user.user_access
       render json: @user, status: :created, logged_in: true
     else
       render json: @user.errors, status: 500
     end
   end
+
+  def show
+    @users = User.all
+    render json: @users
+  end
+
 
   private
 

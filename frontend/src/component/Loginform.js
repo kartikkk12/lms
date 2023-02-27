@@ -170,13 +170,13 @@ function Loginform() {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
     if (!values.user_name) {
-      errors.user_name = "Username is required";
+      errors.user_name = "*Username is required";
     }
     
     if (!values.password) {
-      errors.password = "Password is required";
+      errors.password = "*Password is required";
     } else if (values.password.length < 6) {
-      errors.password = "Password must be more than 6 characters";
+      errors.password = "*Password must be more than 6 characters";
     } 
     console.log("er" + Object.keys(errors).length)
     return errors;
@@ -185,29 +185,30 @@ function Loginform() {
   return (
     <>
     <Header/>
-    <div className='login'>
+    
+    <div className='container'>
       
-    <div className='form-group'>
       <form >
-        <div className="junior">
-        <h1>LOGIN</h1>
-        </div>
+        
         <div className="uiform">
+        <label><b>Login</b></label>
 
         <div className="field">
-            <label>Username</label>
+            {/* <label>Username</label> */}
+
             <input
               type="text"
               name="user_name"
-              placeholder="user_name"
+              placeholder="Username"
               value={formValues.user_name}
+              className="inputbox"
               onChange={handleChange}
             />
           </div>
             <p className="err">{formErrors.user_name}</p>
         
           <div className="field">
-            <label>Password</label>
+            {/* <label>Password</label> */}
             <input
               type="password"
               name="password"
@@ -217,18 +218,30 @@ function Loginform() {
             />
           </div>
             <p className="err">{formErrors.password}</p>
+            
+            <div>
+            <label><b>Organization</b></label>
+            </div>
+            <div>
+            <select name="org_id" id="org_id" class="select-control" onchange="fillOrgId()">
+              <option value="">Select</option>
+              <option value="1">Northgate office</option>
+              <option value="2">Manyata Techpark</option>
+              </select>
+              </div>
 
           
           
           <div className='junior'>
-          <button onClick={handleSubmit}>Submit</button>
+          <button onClick={handleSubmit} className="buton">Log in</button>
           <br/>
-          <Link to='/signup' >New user? Create an account</Link> 
+          <span>New user? </span>
+          <Link to='/signup' >Create an account</Link> 
         </div>
         </div>
+        
       </form>
   
-</div>
 </div>
 </>
 )}

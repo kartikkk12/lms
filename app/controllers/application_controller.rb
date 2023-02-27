@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
+  include CurrentUserConcern
 #   before_filter :set_access
 
 # def set_access

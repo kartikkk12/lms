@@ -8,7 +8,9 @@ import Builder from "./component/builder";
 import User from "./component/user"
 import Navbar from "./component/navbar";
 // import Temp from "./component/temp"
+import Report from "./component/report"
 import Addjourney from "./component/Addjourney";
+import Adduser from "./component/adduser";
 function App() {
   return (
     <>
@@ -18,6 +20,10 @@ function App() {
       <Route path='/builder' element={<Builder />}></Route>
       <Route path='/user' element={<User/>}></Route>
       <Route path='/addjourney' element={<Addjourney/>}/>
+      <Route path='/report' element={<Report/>}></Route>
+      <Route path='/adduser' element={<Adduser/>}/>
+
+
     </Routes>
     <Footer/>
     </div>

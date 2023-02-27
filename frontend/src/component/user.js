@@ -4,6 +4,7 @@ import Navbar from './navbar'
 // import Data from './Data'
 import {Link } from 'react-router-dom'
 import {useState} from 'react'
+import Userpage from './userpage'
 function User (){
 
   const [active,setActive] = useState('first')
@@ -38,6 +39,9 @@ function User (){
               </ul>
             </div>
           </div>
+        </div>
+        <div className='right'>
+          <Userpage/>
         </div>
         
       </div>

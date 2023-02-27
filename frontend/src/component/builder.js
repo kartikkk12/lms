@@ -32,11 +32,7 @@ function Builder() {
     </div>
   </div>
   </div>
-      {/* <div className='right'>
-          {active === 'first' && <Alpha/>}
-          {active === 'second' && <Data page='2'/>}
-          {active === 'thrid' && <Data page='3'/>}
-        </div> */}
+     
         <div className='right'>
           <Alpha/>
         </div>

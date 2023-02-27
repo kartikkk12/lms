@@ -9,6 +9,11 @@ class JourneysController < ApplicationController
         end
     end
 
+    def showall
+      @journeys = Journey.all
+      render json: @journeys
+    end
+
     private
 
     def params_journey
