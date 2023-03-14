@@ -12,19 +12,27 @@ import Overlay from 'terra-overlay';
 import OverlayContainer from 'terra-overlay/lib/OverlayContainer';
 import classNames from 'classnames/bind';
 import styles from './OverlayDocCommon.module.scss';
+import _ from "lodash";
 function Userpage() {
 
 
     const [data,setData] = useState([])
+    const [pageSize,setpagesize]=useState(3)
     const cx = classNames.bind(styles);
-
+    const pageCount= data ? Math.ceil(data.length/pageSize) : 0 ;
+    const pages= _.range(1,pageCount+1)
+    const [term,setTerm]= useState('')
+    const [paginatedPage,setPaginatedPage]=useState([])
 
     useEffect ( () => {
         getJourneys()
     },[])
   
     const getJourneys = () => {
-      axios.get ('http://localhost:3000/user/show').then( json => setData(json.data))
+      axios.get ('http://localhost:3000/user/show').then( json => {
+        setData(json.data)
+        setPaginatedPage(_(json.data).slice(0).take(pageSize).value())
+    })
     }
     const [show, setShow] = useState(false);
     const [relative, setRelative] = useState(true);
@@ -33,8 +41,28 @@ function Userpage() {
       setRelative(false);
     };
 
-    const [term,setTerm]= useState('')
+    const [currentPage,setCurrentPage]=useState(1)
 
+    const pager = (page) =>{
+        setCurrentPage(page)
+        const ind= (page-1)*pageSize
+        const x=_(data).slice(ind).take(pageSize).value()
+        setPaginatedPage(x)
+    }
+    const pager2 = (page) =>{
+      const ind= (page-1)*pageSize
+      const x=_(data).slice(ind).take(pageSize).value()
+      setPaginatedPage(x)
+      setCurrentPage(1)
+
+  }
+  const pager3 = (page) =>{
+    if(page===0 || page>pageCount)return;
+    setCurrentPage(page)
+    const ind= (page-1)*pageSize
+    const x=_(data).slice(ind).take(pageSize).value()
+    setPaginatedPage(x)
+  }
   
     const handleOnRequestESC = () => {
       setShow(false);
@@ -101,12 +129,8 @@ function Userpage() {
             errors.email = "This is not a valid email format!";
           }
         
-        if (!values.password) {
-          errors.password = "*Password is required";
-        } else if (values.password.length < 6) {
-          errors.password = "*Password must be more than 6 characters";
-        } 
-        console.log("er" + Object.keys(errors).length)
+        
+        Object.keys(errors).length ? formErrors.main="Enter data properly" : formErrors.main=""
         return errors;
       };
     const addOverlay = () => {
@@ -117,17 +141,17 @@ function Userpage() {
               <div >
                 <div className='hedi'>Add User</div>
                 <div >
-                    
-                  <label htmlFor="first_name">First Name </label>
+                  <p className='redstar'>{ formErrors.main}</p>
+                  <label htmlFor="first_name"><span className='redstar'>*</span>First Name </label>
                   <input type="text" name="first_name" id="first_name" className='inp' value={formValues.first_name} onChange={handleChange}/>
                 </div>
                 
                 <div className="form-group">
-                  <label htmlFor="last_name">Last Name </label>
+                  <label htmlFor="last_name"><span className='redstar'>*</span>Last Name </label>
                   <input type="text" name="last_name" id="last_name"className='inp'  value={formValues.last_name} onChange={handleChange}/>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="user_name">User Name </label>
+                  <label htmlFor="user_name"><span className='redstar'>*</span>User Name </label>
                   <input type="text" name="user_name" id="user_name" className='inp' value={formValues.user_name} onChange={handleChange}/>
                 </div>
                 <div className="form-group">
@@ -137,7 +161,7 @@ function Userpage() {
               
                 
                     <div>
-                    <label>User Access</label>
+                    <label><span className='redstar'>*</span>User Access</label>
                     </div>
                     <div className='gapbelow'>
                     <select name="user_access" id="user_access" class="select-control2" value={formValues.user_access} onChange={handleChange}>
@@ -149,14 +173,13 @@ function Userpage() {
                     
                     
                     <div>
-                    <label>User Status</label>
+                    <label><span className='redstar'>*</span>User Status</label>
                     </div>
                     <select name="user_status" id="user_status" class="select-control2"  value={formValues.user_status} onChange={handleChange}>
                     <option value="">Select</option>
                     <option value="active">Active</option>
                     <option value="inactive">Inactive</option>
                     </select>
-                    <input type="hidden" value={formValues.password} />
            
              
                 
@@ -172,29 +195,6 @@ function Userpage() {
       );
     };
   
-    const renderTable = () => {
-      return data.filter((user) => {
-        if(term==''){
-          return user
-        }
-        else if(user.user_name.toLowerCase().includes(term.toLowerCase())){
-          return user
-        }
-      }).map(user => {
-        return (
-          <tr>
-            <td>{user.user_name}</td>
-            <td>{user.email}</td>
-            <td>{user.updated_at.slice(0,10)}</td>
-            <td>{user.user_status}</td>
-            <td>{user.user_access}</td>
-
-  
-            {/* add link to in last two columns */}
-          </tr>
-        )
-      })
-    }
   return (
     <>
     <div className='marg'>
@@ -243,8 +243,71 @@ function Userpage() {
                 
               </tr>
             </thead>
-            <tbody >{renderTable()}</tbody>
+            <tbody >
+            {paginatedPage.filter((user) => {
+        if(term==''){
+          return user
+        }
+        else if(user.user_name.toLowerCase().includes(term.toLowerCase())){
+          return user
+        }
+      }).length === 0 ? (
+        <tr>
+          <td colSpan="5" className="norecords">No records found.</td>
+        </tr>
+      ) : (
+        paginatedPage
+          .filter((user) => {
+            if (term === "") {
+              return user;
+            } else if (
+              user.user_name.toLowerCase().includes(term.toLowerCase())
+            ) {
+              return user;
+            }
+          }))
+      .map(user => {
+        return (
+          <tr>
+            <td>{user.user_name}</td>
+            <td>{user.email}</td>
+            <td>{user.updated_at.slice(0,10)}</td>
+            <td>{user.user_status}</td>
+            <td>{user.user_access}</td>
+          </tr>
+        )
+      })}</tbody>
           </table>
+          <div >
+          <div className='topleft'>
+
+            <select value={pageSize}  class="form-select" aria-label="Default select example" onChange={e => {setpagesize(parseInt(e.target.value))}} onClick={()=>{pager2(1)}}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <span>Records per page</span>
+
+            </div>
+            <div className='middlex'>
+            <ul className='pagination'>
+            <li><p className='page-link' onClick={()=>{pager3(currentPage-1)}}>Previous</p></li>
+
+                {pages.map( page => { return (
+                    <li className={ page === currentPage ? "page-item active" : "page-item"}>
+                    <p className="page-link" onClick={()=> {pager(page)}}>{page}</p>
+                    </li>
+                )
+                })}
+              <li><p className='page-link' onClick={()=>{pager3(currentPage+1)}}>Next</p></li>
+
+            </ul>
+            </div>
+          
+            </div>
 
 
     </>

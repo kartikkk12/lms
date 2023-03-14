@@ -265,7 +265,7 @@ body{
   flex-direction: column;
   width: 200px;
   max-height: 200px;
-  overflow-y: auto;
+  /* overflow-y: auto ; */
   background-color: #ffffff;
   border: 1px solid lightgray;
   transition: all 0.2s ease-in-out;
@@ -296,9 +296,29 @@ body{
   padding: 6px;
   background-color: #eeeeee;
 }
+.dest {
+  float: right;
+    cursor: pointer;
+
+}
 .collapsible .headerx {
-  background-color: #dddddd;
+  background-color: #dedede;
   padding: 6px;
-  cursor: pointer;
+  width: 80%;
+  /* cursor: pointer; */
+  color:#0d0d0d;
   align-items: left;
 }
+.collapsible .collapse {
+   background-color: #dddddd;
+   padding: 6px;
+    cursor: pointer;
+   align-items: left;
+  }
+  .bolder{
+    color:#000000 !important
+  }
+  .bolder2{
+    color:#000000 !important;
+    font-weight: bold;
+  }

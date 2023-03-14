@@ -19,8 +19,12 @@ body{
     height: 50px !important;
     
    
-  } */
 
+  } */
+  .fonter{
+    /* height: 10%; */
+    font-size: small !important;
+  }
   .field {
     padding-bottom: 10px;
   }
@@ -81,8 +85,11 @@ body{
   .hedi{
     width: 100%;
     /* background-color: #ccc; */
+    display: flex;
     font-size: large;
     font-weight: bold;
+    justify-content: center;
+    align-items: center;
   }
   .inp {
     width:100%;
@@ -90,6 +97,7 @@ body{
     border-radius:0.25em;
     height: 1.5em;
     outline:none;
+    
 
     border: 1px solid rgb(120, 120, 120);
   }
@@ -107,7 +115,9 @@ body{
     border: 1px solid rgb(120, 120, 120);
   } */
   p {display:inline;}
-   
+   .redstar{
+    color:red;
+   }
   .container input{
     width:100%;
     margin-bottom: 0px;
@@ -226,6 +236,7 @@ body{
     /* padding: 0px 10px ;  */
     padding-bottom: 20px;
 
+
     height: 50px;
     background-color: #007CC3;
     color: #ffffff;
@@ -298,26 +309,28 @@ body{
     padding: 0;
     width: 150px;
     height:100vh;
-    background-color: #f1f1f1;
+    background-color:white;
    
   }
    
    
   .sidebar li a{
-    position:relative;
+    /* position:relative; */
     display: table;
     color:  #0362a5;
     padding: 8px 16px;
-    width:100%;
+    width:150px;
     text-decoration: none;
     font-size: 16px;
    
   }
    
   .sidebar li a:hover{
-    background-color: #d7d9da;
+    /* background-color: #bdc9cf; */
+    background-image: linear-gradient(to right, #0362a5 10px, #dddddd 10px);
     color: #0362a5;
-    width:100%;
+    margin-left: 0px;
+    width:150px;
   }
    
   .app ul{
@@ -420,10 +433,10 @@ body{
       display: block;
       color: white;
       text-align:right;
-      padding: 12px 600px;
+      padding: 12px 550px;
       text-decoration: none;
     }
-   
+  
     .login label{
       margin: 0;
       padding: 0;
@@ -491,7 +504,7 @@ body{
     } */
     .side {
       flex: 35%;
-      background-color: #f1f1f1;
+      background-color: #ffffff;
       position: fixed;
       /* width:200px; */
       left: 0;
@@ -522,3 +535,17 @@ body{
       padding: 20px;
       width: 100%;
     }
+
+
+.topleft {
+  float: left;
+}
+
+.middlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.norecords{
+  text-align: center;
+}

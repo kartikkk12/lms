@@ -1,13 +1,10 @@
 import React from 'react'
 import { FiPlus , FiUpload, FiDownload} from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { BiArchiveIn } from "react-icons/bi";
 import {BsFillShareFill } from "react-icons/bs";
-import Table from 'terra-table'
 import {useState, useEffect} from 'react'
 import axios from 'axios'
-import SearchSelect from 'terra-form-select/lib/SearchSelect';
-import classNames from 'classnames/bind';
+import _ from'lodash'
 // import styles from './beta.scss';
 
 function Alpha () {
@@ -19,30 +16,37 @@ function Alpha () {
   },[])
 
   const getJourneys = () => {
-    axios.get ('http://localhost:3000/journey/showall').then( json => setData(json.data))
+    axios.get ('http://localhost:3000/journey/showall').then( json => {setData(json.data)
+    setPaginatedPage(_(json.data).slice(0).take(pageSize).value())
+  })
   }
+  const [currentPage,setCurrentPage]=useState(1)
+  const [pageSize,setpagesize]=useState(4)
+  const pageCount= data ? Math.ceil(data.length/pageSize) : 0 ;
+  const pages= _.range(1,pageCount+1)
+  const [paginatedPage,setPaginatedPage]=useState([])
 
-  const renderTable = () => {
-    return data.filter((user) => {
-      if(term==''){
-        return user
-      }
-      else if(user.journey_name.toLowerCase().includes(term.toLowerCase())){
-        return user
-      }
-    }).
-      map(user => {
-      return (
-        <tr>
-          <td>{user.journey_name}</td>
-          <td>{user.journey_status}</td>
-          <td>{user.j_last_updated.slice(0,10)}</td>
-
-          {/* add link to in last two columns */}
-        </tr>
-      )
-    })
+  const pager = (page) =>{
+      setCurrentPage(page)
+      const ind= (page-1)*pageSize
+      const x=_(data).slice(ind).take(pageSize).value()
+      setPaginatedPage(x)
   }
+  const pager2 = (page) =>{
+    const ind= (page-1)*pageSize
+    const x=_(data).slice(ind).take(pageSize).value()
+    setPaginatedPage(x)
+    setCurrentPage(1)
+
+}
+const pager3 = (page) =>{
+  if(page===0 || page>pageCount)return;
+  setCurrentPage(page)
+  const ind= (page-1)*pageSize
+  const x=_(data).slice(ind).take(pageSize).value()
+  setPaginatedPage(x)
+}
+
   const [term,setTerm]= useState('')
  
   return (
@@ -86,8 +90,72 @@ function Alpha () {
                 
               </tr>
             </thead>
-            <tbody >{renderTable()}</tbody>
+            <tbody >{paginatedPage.filter((user) => {
+      if(term==''){
+        return user
+      }
+      else if(user.journey_name.toLowerCase().includes(term.toLowerCase())){
+        return user
+      }
+    }).length === 0 ? (
+      <tr>
+        <td colSpan="3" className="norecords">No records found.</td>
+      </tr>
+    ) : (
+      paginatedPage
+        .filter((user) => {
+          if (term === "") {
+            return user;
+          } else if (
+            user.journey_name.toLowerCase().includes(term.toLowerCase())
+          ) {
+            return user;
+          }
+        })).
+      map(user => {
+      return (
+        <tr>
+          <td><Link to={`/details/${user.id}`}>{user.journey_name}</Link></td>
+          <td>{user.journey_status}</td>
+          <td>{user.j_last_updated.slice(0,10)}</td>
+
+          {/* add link to in last two columns */}
+        </tr>
+      )
+    })}</tbody>
           </table>
+        
+          <div >
+          <div className='topleft'>
+
+            <select value={pageSize}  class="form-select" aria-label="Default select example" onChange={e => {setpagesize(parseInt(e.target.value))}} onClick={()=>{pager2(1)}}>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+            <span>Records per page</span>
+
+            </div>
+            <div className='middlex'>
+            <ul className='pagination'>
+            <li><p className='page-link' onClick={()=>{pager3(currentPage-1)}}>Previous</p></li>
+
+                {pages.map( page => { return (
+                    <li className={ page === currentPage ? "page-item active" : "page-item"}>
+                    <p className="page-link" onClick={()=> {pager(page)}}>{page}</p>
+                    </li>
+                )
+                })}
+              <li><p className='page-link' onClick={()=>{pager3(currentPage+1)}}>Next</p></li>
+
+            </ul>
+            </div>
+          
+            </div>
+            
 
 
     </>

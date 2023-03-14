@@ -4,20 +4,23 @@ import React from "react";
 // import Journeys from "./Journeys";
 import { Link, useNavigate } from "react-router-dom";
 import { FiPlus } from 'react-icons/fi';
-import { AiOutlineCloudUpload, AiOutlineCaretDown} from 'react-icons/ai';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { AiFillDelete } from 'react-icons/ai';
 import './Journeys.css';
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 // import { useEffect} from 'react';
 import axios from "axios";
 // import ReactTable from "react-table";  
 import useCollapse from 'react-collapsed';
 import Navbar from "./navbar";
+import { useParams } from 'react-router-dom';
 
  
-function Addjourney()
+function Journeydetail()
 {
-  
+
+    const { id } = useParams();
+
  
   const options = [' Video', 'Link', 'Document'];
   const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -30,27 +33,23 @@ function Addjourney()
     newIsMenuOpen[index] = !newIsMenuOpen[index]; 
     setIsMenuOpen(newIsMenuOpen);
   };
-
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse();
-
-
-
   const [isMenuOpen, setIsMenuOpen] = useState([false]);
+    const [jname, setJname] = useState('');
     const [remainingChars1, setRemainingChars1] = useState(155);
+    const [dname, setDname] = useState('');
     const [remainingChars2, setRemainingChars2] = useState(155);
+    const [overview, setOverview] = useState('');
     const [remainingChars3, setRemainingChars3] = useState(1024);
+    const [completion, setCompletion] = useState('');
     const [remainingChars4, setRemainingChars4] = useState(1024);
+    const [sname, setSname] = useState('');
     const [remainingChars5, setRemainingChars5] = useState([155]);
+    const [soverview, setSoverview] = useState('');
     const [remainingChars6, setRemainingChars6] = useState([1024]);
+    const [scompletion, setScompletion] = useState('');
     const [remainingChars7, setRemainingChars7] = useState([1024]);
-    const navigate=useNavigate()
-    const [journeyForm,setJourneyForm]=useState({ 
-    journey_name :"" , 
-    display_name: "", 
-    overview_message: "", 
-    completion_message: "",
-    journey_status: ""
-    })
+   
     function handleChange1(e) {
         const { name, value } = e.target;
         setJourneyForm({ ...journeyForm, [name]: value });
@@ -76,6 +75,7 @@ function Addjourney()
         const { name, value } = e.target;
         setJourneyForm({ ...journeyForm, [name]: value });
         setRemainingChars4(1024 - value.length);
+        console.log(journeyForm)
  
       }
       const handleChange5=(e, index) =>{
@@ -111,8 +111,26 @@ function Addjourney()
         console.log(stageForm)
       }
  
+ 
+    const navigate=useNavigate()
 
-  
+    const [stageForm,setStageForm] =useState([{stage_name:'',overview_message:'',completion_message:''}])
+
+    useEffect(() => {
+        axios.get(`http://localhost:3000/details/${id}`).then(response => {
+          setJourneyForm(response.data);
+          setStageForm(response.data.stages);
+          console.log(stageForm)
+        });
+      }, [id]);
+    //   console.log(stageForm)
+    const [journeyForm,setJourneyForm]=useState({ 
+    journey_name :"" , 
+    display_name: "", 
+    overview_message: "", 
+    completion_message: "",
+    journey_status: ""
+    })
 
     const handlesubmitall =(e)=>{
       e.preventDefault();
@@ -138,7 +156,7 @@ function Addjourney()
         );
         navigate('/builder')
     }
-    const [stageForm,setStageForm] =useState([])
+    console.log(journeyForm)
     const handleremove=(index)=>{
       const list=[...stageForm];
       list.splice(index,1);
@@ -190,7 +208,7 @@ function Addjourney()
  
             <div className="form-group">
             <label className="bolder2" htmlFor="display_name"><span className='redstar'>*</span>Display name </label><br/>
-            <input className= "display" type="text" name="display_name" id="display_name" value= {journeyForm.display_name}  onChange={e=>handleChange2(e)} required/>            <br/>
+            <input className= "display" type="text" name="display_name" id="display_name" value= {journeyForm.display_name} onChange={e=>handleChange2(e)} required/>            <br/>
 
             <p className="bolder">Characters remaining:<span className="bolder2">{remainingChars2}</span></p>
             </div>
@@ -217,11 +235,11 @@ function Addjourney()
               return (
                 <div key={index} className="collapsible">
                 <div className="headerx" >
-                    {isExpanded ? <span {...getToggleProps()}><AiOutlineCaretDown/>{stageForm[index].stage_name.length ?
+                    {isExpanded ? <span {...getToggleProps()}>{stageForm[index].stage_name.length ?
                      stageForm[index].stage_name : 'Untitled ' + (index+1)}</span> :
-                      <span {...getToggleProps()}>{stageForm[index].stage_name.length ? 
-                      stageForm[index].stage_name : 'Untitled '+(index+1)}</span>}
-                      {<span className="dest" onClick={()=>handleremove(index)}><AiFillDelete></AiFillDelete></span>}
+                      <span {...getToggleProps()}>{stageForm[index].stage_name.length ?
+                       stageForm[index].stage_name : 'Untitled ' + (index+1)} </span>}
+                       {<span className="dest" onClick={()=>handleremove(index)}><AiFillDelete></AiFillDelete></span>}
                 </div>
                 <div {...getCollapseProps()}>
                     <div className="content">
@@ -240,14 +258,14 @@ function Addjourney()
  
             <div className="form-group">
             <label className="bolder2" htmlFor="overview_message"><span className='redstar'>*</span>Overview Message </label>
-            <input className="overview" type="text" name="overview_message" id="overview_message"  onChange={e=>handleChange6(e,index)} />            <br/>
+            <input className="overview" type="text" name="overview_message" value={stageForm[index].overview_message} id="overview_message"  onChange={e=>handleChange6(e,index)} />            <br/>
 
             <p className="bolder">Characters remaining:<span className="bolder2">{remainingChars6[index]}</span></p>
             </div>
  
             <div className="form-group">
             <label className="bolder2" htmlFor="completion_message"><span className='redstar'>*</span>Completion Message </label>
-            <input  className="completion" type="text" name="completion_message" id="completion_message" onChange={e=>handleChange7(e,index)}/>            <br/>
+            <input  className="completion" type="text" name="completion_message"value={stageForm[index].completion_message}  id="completion_message" onChange={e=>handleChange7(e,index)}/>            <br/>
 
             <p className="bolder">Characters remaining:  <span className="bolder2">{remainingChars7[index]}</span></p>
             </div>
@@ -304,4 +322,4 @@ function Addjourney()
         </>
     );
 }
-export default Addjourney;
+export default Journeydetail;

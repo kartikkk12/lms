@@ -178,6 +178,7 @@ function Loginform() {
     } else if (values.password.length < 6) {
       errors.password = "*Password must be more than 6 characters";
     } 
+    // if(!values.)
     console.log("er" + Object.keys(errors).length)
     return errors;
   };
@@ -206,6 +207,7 @@ function Loginform() {
             />
           </div>
             <p className="err">{formErrors.user_name}</p>
+            
         
           <div className="field">
             {/* <label>Password</label> */}
@@ -223,11 +225,13 @@ function Loginform() {
             <label><b>Organization</b></label>
             </div>
             <div>
-            <select name="org_id" id="org_id" class="select-control" onchange="fillOrgId()">
+            <select name="org_id" id="org_id" class="select-control" onchange={handleChange}>
               <option value="">Select</option>
-              <option value="1">Northgate office</option>
-              <option value="2">Manyata Techpark</option>
+              <option value="10">Northgate office</option>
+              <option value="11">Manyata Techpark</option>
               </select>
+              <p className="err">{formErrors.org_id}</p>
+
               </div>
 
           
