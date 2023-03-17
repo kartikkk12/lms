@@ -3,11 +3,11 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new(params_activity)
 
     if @activity.save
-    render json: @activity, status: :created, activity_created: true
+      render json: @activity, status: :created, activity_created: true
     else
-    render json: @activity.errors, status: 500
+      render json: @activity.errors, status: 500
     end
-  end 
+  end
 
   private
 

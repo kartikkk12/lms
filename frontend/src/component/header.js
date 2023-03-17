@@ -1,11 +1,7 @@
 import React from 'react'
 
 function Header() {
-  return (
-    <div className="header">
-      Cerner Learning
-    </div>
-  )
+  return <div className="header">Cerner Learning</div>
 }
 
 export default Header

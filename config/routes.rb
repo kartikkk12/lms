@@ -17,4 +17,3 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#logout'
   get 'details/:id', to: 'journeys#show'
 end
- 

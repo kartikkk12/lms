@@ -2,14 +2,11 @@ import React from 'react'
 import Navbar from './navbar'
 // import MenuBar from './MenuBar'
 // import Data from './Data'
-import {Link } from 'react-router-dom'
-import {useState} from 'react'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import Userpage from './userpage'
-function User (){
-
-  const [active,setActive] = useState('first')
-
-
+function User() {
+  const [active, setActive] = useState('first')
 
   return (
     //   <frameset rows="5,95">
@@ -21,9 +18,9 @@ function User (){
     //     </frameset>
 
     <div>
-    <Navbar/>
-    <div className='row'>
-        <div className='side'>
+      <Navbar />
+      <div className="row">
+        <div className="side">
           <div className="sidebar">
             <div className="nav">
               <ul>
@@ -40,14 +37,11 @@ function User (){
             </div>
           </div>
         </div>
-        <div className='right'>
-          <Userpage/>
+        <div className="right">
+          <Userpage />
         </div>
-        
       </div>
     </div>
-    
-        
   )
 }
 
