@@ -19,7 +19,9 @@ function Builder() {
             <div className="nav">
               <ul>
                 <li>
-                  <Link to="">Journeys</Link>
+                  <Link to="" className="zf">
+                    Journeys
+                  </Link>
                 </li>
                 <li>
                   <Link to="">Activities</Link>

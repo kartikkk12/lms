@@ -12,6 +12,8 @@ import Report from './component/report'
 import Addjourney from './component/Addjourney'
 import Adduser from './component/adduser'
 import Journeydetail from './component/Journeydetail'
+import JourneyRedux from './component/journey_redux'
+import AddJourneyRedux from './component/Add_Journey_Redux'
 function App() {
   return (
     <>
@@ -21,9 +23,11 @@ function App() {
           <Route path="/builder" element={<Builder />}></Route>
           <Route path="/user" element={<User />}></Route>
           <Route path="/addjourney" element={<Addjourney />} />
+          <Route path="/addjourneyredux" element={<AddJourneyRedux />} />
           <Route path="/report" element={<Report />}></Route>
           <Route path="/adduser" element={<Adduser />} />
           <Route path="/details/:id" element={<Journeydetail />} />
+          <Route path="/details2/:id" element={<JourneyRedux />} />
         </Routes>
         <Footer />
       </div>

@@ -5,12 +5,16 @@ import { BsFillShareFill } from 'react-icons/bs'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import _ from 'lodash'
+import { useDispatch, useSelector } from 'react-redux'
+import { setJourney } from '../redux/actions/Journey_actions'
 // import styles from './beta.scss';
 
 function Alpha() {
   const [data, setData] = useState([])
-
+  const j = useSelector((state) => state.allJourneys.journeys)
+  const dispatch = useDispatch()
   useEffect(() => {
+    console.log(j)
     getJourneys()
   }, [])
 
@@ -18,6 +22,7 @@ function Alpha() {
     axios.get('http://localhost:3000/journey/showall').then((json) => {
       setData(json.data)
       setPaginatedPage(_(json.data).slice(0).take(pageSize).value())
+      dispatch(setJourney(json.data))
     })
   }
   const [currentPage, setCurrentPage] = useState(1)
@@ -60,7 +65,7 @@ function Alpha() {
       </div>
 
       <div className="linkgaps">
-        <Link to="/addjourney" className="linker">
+        <Link to="/addjourneyredux" className="linker">
           <FiPlus />
           Journey
         </Link>
@@ -133,7 +138,10 @@ function Alpha() {
                 return (
                   <tr>
                     <td>
-                      <Link to={`/details/${user.id}`}>
+                      {/* <Link to={`/details/${user.id}`}>
+                        {user.journey_name}
+                      </Link> */}
+                      <Link to={`/details2/${user.id}`}>
                         {user.journey_name}
                       </Link>
                     </td>

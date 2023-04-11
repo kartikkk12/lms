@@ -1,13 +1,10 @@
 import React from 'react'
 import { FiPlus, FiUpload, FiDownload } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
-import { BiArchiveIn } from 'react-icons/bi'
-import { BsFillShareFill } from 'react-icons/bs'
-import Table from 'terra-table'
+
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import { AiOutlineImport } from 'react-icons/ai'
-import { AiOutlineCloudUpload, AiOutlineSearch } from 'react-icons/ai'
+
 import Overlay from 'terra-overlay'
 import OverlayContainer from 'terra-overlay/lib/OverlayContainer'
 import classNames from 'classnames/bind'

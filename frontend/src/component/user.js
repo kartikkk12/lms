@@ -25,7 +25,9 @@ function User() {
             <div className="nav">
               <ul>
                 <li>
-                  <Link to="">Users</Link>
+                  <Link to="" className="zf">
+                    Users
+                  </Link>
                 </li>
                 <li>
                   <Link to="">Groups</Link>

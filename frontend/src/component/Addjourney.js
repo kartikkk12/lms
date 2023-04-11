@@ -146,7 +146,7 @@ function Addjourney() {
         stage_name: '',
         overview_message: '',
         completion_message: '',
-        activites: [],
+        activities: [],
       },
     ])
     setRemainingChars5([...remainingChars5, 155])
@@ -363,47 +363,66 @@ function Addjourney() {
                                   </p>
                                 </div>
 
-                                <div className="dropdown">
-                                  <div
-                                    className="dropdown-button"
-                                    onClick={(e) => handleButtonClick(index)}
-                                  >
-                                    <FiPlus />
-                                    Add Activity
-                                  </div>
-                                  <div
-                                    className={`dropdown-menu ${
-                                      isMenuOpen[index]
-                                        ? 'dropdown-menu--open'
-                                        : 'dropdown-menu--closed'
-                                    }`}
-                                  >
-                                    {options.map((option) => (
-                                      <div
-                                        key={option}
-                                        onClick={() =>
-                                          handleOptionChange(option)
-                                        }
-                                        className={`dropdown-menu-item ${
-                                          selectedOption === option
-                                            ? 'dropdown-menu-item--active'
-                                            : ''
-                                        }`}
-                                      >
-                                        {option}
-                                      </div>
-                                    ))}
-                                  </div>
+                                <Link
+                                  className="dropdown-button"
+                                  onClick={(e) => handleButtonClick(index)}
+                                >
+                                  <FiPlus />
+                                  Add Activity
+                                </Link>
+                                <div
+                                  className={`dropdown-menu ${
+                                    isMenuOpen[index]
+                                      ? 'dropdown-menu--open'
+                                      : 'dropdown-menu--closed'
+                                  }`}
+                                >
+                                  {options.map((option) => (
+                                    <div
+                                      key={option}
+                                      onClick={() => handleOptionChange(option)}
+                                      className={`dropdown-menu-item ${
+                                        selectedOption === option
+                                          ? 'dropdown-menu-item--active'
+                                          : ''
+                                      }`}
+                                    >
+                                      {option}
+                                    </div>
+                                  ))}
                                 </div>
+
                                 <br />
                                 <br />
                                 <div>
-                                  <table>
-                                    <tr>
-                                      <th>Activity</th>
-                                      <th>Type</th>
-                                      <th>Data</th>
+                                  <table className="centerx">
+                                    <tr className="centerx">
+                                      <th className="centerx">Activity</th>
+                                      <th className="centerx">Type</th>
+                                      <th className="centerx">Data</th>
                                     </tr>
+                                    <tbody>
+                                      {stageForm[index].activities.length >
+                                      0 ? (
+                                        stageForm[index].activities.map(
+                                          (user) => {
+                                            return (
+                                              <tr>
+                                                <td>{user.activity_type}</td>
+                                                <td>{user.activity_type}</td>
+                                                <td>{user.activity_data}</td>
+                                              </tr>
+                                            )
+                                          }
+                                        )
+                                      ) : (
+                                        <tr>
+                                          <td colSpan="3" className="centerx">
+                                            No Activities Present
+                                          </td>
+                                        </tr>
+                                      )}
+                                    </tbody>
                                   </table>
                                 </div>
                               </div>

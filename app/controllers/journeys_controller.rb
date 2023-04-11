@@ -26,26 +26,26 @@ class JourneysController < ApplicationController
   #     # end
   #   end
   # end
-  def create
-    ActiveRecord::Base.transaction do
-      @journey = Journey.new(params_journey)
-      if @journey.save
-        if params[:stages]
-          params[:stages].each do |params_stage|
-            @stage = @journey.stages.new(params_stage.permit(:stage_name, :overview_message, :completion_message))
-            raise ActiveRecord::Rollback, 'could not be created stage' unless @stage.save
-          end
-        end
+  # def create
+  #   ActiveRecord::Base.transaction do
+  #     @journey = Journey.new(params_journey)
+  #     if @journey.save
+  #       if params[:stages]
+  #         params[:stages].each do |params_stage|
+  #           @stage = @journey.stages.new(params_stage.permit(:stage_name, :overview_message, :completion_message))
+  #           raise ActiveRecord::Rollback, 'could not be created stage' unless @stage.save
+  #         end
+  #       end
 
-        render json: @journey, status: :created
-      else
-        render json: @journey.errors, status: 500
-      end
+  #       render json: @journey, status: :created
+  #     else
+  #       render json: @journey.errors, status: 500
+  #     end
 
-    rescue ActiveRecord::Rollback => e
-      render json: { message: e.message }, status: :unprocessable_entity
-    end
-  end
+  #   rescue ActiveRecord::Rollback => e
+  #     render json: { message: e.message }, status: :unprocessable_entity
+  #   end
+  # end
 
   def create2
     ActiveRecord::Base.transaction do
@@ -91,12 +91,9 @@ class JourneysController < ApplicationController
     render json: @journey, include: { stages: { include: :activities } }
   end
 
-
-
   # def params_stages
   #   params.require(:stage).permit(:stage_name, :overview_message, :completion_message)
   # end
-
 
   private
 

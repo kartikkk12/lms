@@ -35,7 +35,7 @@ const Navbar = () => {
         <NavLink to="/user" className="navbox">
           User
         </NavLink>
-        <NavLink to="/rep" className="navbox">
+        <NavLink to="/report" className="navbox">
           Reports
         </NavLink>
         <NavLink to="/" className="navbox" onClick={logout}>
