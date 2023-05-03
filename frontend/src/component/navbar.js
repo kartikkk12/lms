@@ -13,7 +13,7 @@ const Navbar = () => {
       .then((response) => {
         if (!response.data.logged_in) {
           setUser('kartikkk')
-          console.log(response.data)
+          // console.log(response.data)
         } else {
           setUser(response.data.users_name)
         }

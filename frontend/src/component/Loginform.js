@@ -135,7 +135,7 @@ function Loginform() {
       )
       .then((response) => {
         setUser(response.data.user_name)
-        console.log(currUser)
+        // console.log(currUser)
         navigate('/builder')
       })
       .catch((error) => {
@@ -151,7 +151,7 @@ function Loginform() {
   }
 
   useEffect(() => {
-    console.log(formErrors)
+    // console.log(formErrors)
 
     if (Object.keys(formErrors).length === 0 && currUser) {
       console.log(formValues)

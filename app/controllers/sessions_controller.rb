@@ -6,13 +6,14 @@ class SessionsController < ApplicationController
     @user = User.find_by(user_name: params_user[:user_name])
 
     if @user && @user.authenticate(params_user[:password])
-      session[:user_id] = @user.id
-      cookies[:role] = @user.user_access
+      # session[:user_id] = @user.id
+      # cookies[:role] = @user.user_access
       render json: {
         status: :created,
         logged_in: true,
         curr_user: @user
-      }
+      },
+      status: 201
     else
       render json: { error: 'Invalid email or password' }, status: :unprocessable_entity
     end

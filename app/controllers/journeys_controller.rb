@@ -50,6 +50,10 @@ class JourneysController < ApplicationController
   def create2
     ActiveRecord::Base.transaction do
       @journey = Journey.new(params_journey)
+      if @journey.journey_name.blank? || @journey.overview_message.blank?
+        render json: { error: 'journey name, overview message or completetion message cannot be empty' }, status: :unprocessable_entity
+        return
+      end
       if @journey.save
         if params[:stages]
           params[:stages].each do |params_stage|

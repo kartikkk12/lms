@@ -14,7 +14,7 @@ function Alpha() {
   const j = useSelector((state) => state.allJourneys.journeys)
   const dispatch = useDispatch()
   useEffect(() => {
-    console.log(j)
+    // console.log(j)
     getJourneys()
   }, [])
 

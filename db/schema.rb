@@ -10,77 +10,77 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_230_216_073_159) do
-  create_table 'activities', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'activity_type'
-    t.string 'activity_data'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+ActiveRecord::Schema[7.0].define(version: 2023_02_16_073159) do
+  create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "activity_type"
+    t.string "activity_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'journeys', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'journey_name'
-    t.string 'display_name'
-    t.string 'overview_message'
-    t.string 'completion_message'
-    t.string 'journey_status'
-    t.datetime 'j_last_updated'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "journeys", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "journey_name"
+    t.string "display_name"
+    t.string "overview_message"
+    t.string "completion_message"
+    t.string "journey_status"
+    t.datetime "j_last_updated"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'organisations', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'org_name'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
+  create_table "organisations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "org_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'stage_activities', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.bigint 'activity_id', null: false
-    t.bigint 'stage_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['activity_id'], name: 'index_stage_activities_on_activity_id'
-    t.index ['stage_id'], name: 'index_stage_activities_on_stage_id'
+  create_table "stage_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "activity_id", null: false
+    t.bigint "stage_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id"], name: "index_stage_activities_on_activity_id"
+    t.index ["stage_id"], name: "index_stage_activities_on_stage_id"
   end
 
-  create_table 'stages', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'stage_name'
-    t.string 'overview_message'
-    t.string 'completion_message'
-    t.bigint 'journey_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['journey_id'], name: 'index_stages_on_journey_id'
+  create_table "stages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "stage_name"
+    t.string "overview_message"
+    t.string "completion_message"
+    t.bigint "journey_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journey_id"], name: "index_stages_on_journey_id"
   end
 
-  create_table 'user_journeys', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.bigint 'journey_id', null: false
-    t.bigint 'user_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['journey_id'], name: 'index_user_journeys_on_journey_id'
-    t.index ['user_id'], name: 'index_user_journeys_on_user_id'
+  create_table "user_journeys", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "journey_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journey_id"], name: "index_user_journeys_on_journey_id"
+    t.index ["user_id"], name: "index_user_journeys_on_user_id"
   end
 
-  create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_0900_ai_ci', force: :cascade do |t|
-    t.string 'first_name'
-    t.string 'last_name'
-    t.string 'email'
-    t.string 'user_name'
-    t.string 'password_digest'
-    t.string 'user_access'
-    t.string 'user_status'
-    t.bigint 'organisation_id', null: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index ['organisation_id'], name: 'index_users_on_organisation_id'
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "user_name"
+    t.string "password_digest"
+    t.string "user_access"
+    t.string "user_status"
+    t.bigint "organisation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organisation_id"], name: "index_users_on_organisation_id"
   end
 
-  add_foreign_key 'stage_activities', 'activities'
-  add_foreign_key 'stage_activities', 'stages'
-  add_foreign_key 'stages', 'journeys'
-  add_foreign_key 'user_journeys', 'journeys'
-  add_foreign_key 'user_journeys', 'users'
-  add_foreign_key 'users', 'organisations'
+  add_foreign_key "stage_activities", "activities"
+  add_foreign_key "stage_activities", "stages"
+  add_foreign_key "stages", "journeys"
+  add_foreign_key "user_journeys", "journeys"
+  add_foreign_key "user_journeys", "users"
+  add_foreign_key "users", "organisations"
 end

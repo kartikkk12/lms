@@ -11,6 +11,8 @@
 # a separate helper file that requires the additional dependencies and performs
 # the additional setup, and require it from the spec files that actually need
 # it.
+
+require 'simplecov'
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
@@ -94,5 +96,16 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+  
 =end
+SimpleCov.start 'rails' do
+  add_filter 'app/channels'
+  add_filter 'app/jobs'
+  add_filter 'app/mailers'
+  add_filter 'app/models/application_record.rb'
+  add_filter 'app/models/concerns'
+  add_filter 'lib'
+  add_filter 'vendor'
+end
+
 end
